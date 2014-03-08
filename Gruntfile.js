@@ -102,11 +102,25 @@ module.exports = function(grunt) {
 				tasks: 'default'
 			},
 			theme: {
-				files: [ 'css/theme/source/*.scss', 'css/theme/template/*.scss' ],
-				tasks: 'themes'
-			}
-		}
+                files: [ 'css/theme/source/*.scss', 'css/theme/template/*.scss' ],
+                tasks: 'themes'
+            },
+            compass: {
+                files: [ 'css/custom/sass/*.scss'],
+                tasks: 'compass'
+            }
+        },
 
+        compass: {
+            dev: {
+                options: {
+                    basePath: 'css/custom',
+                    sassDir: 'sass',
+                    cssDir: 'stylesheets',
+                    trace: true
+                }
+            }
+        }
 	});
 
 	// Dependencies
@@ -117,6 +131,7 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks( 'grunt-contrib-watch' );
 	grunt.loadNpmTasks( 'grunt-contrib-sass' );
 	grunt.loadNpmTasks( 'grunt-contrib-connect' );
+    grunt.loadNpmTasks( 'grunt-contrib-compass' );
 	grunt.loadNpmTasks( 'grunt-zip' );
 
 	// Default task
