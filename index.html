@@ -116,34 +116,217 @@ function linkify( selector ) {
                         <li class="fragment roll-in">
                             bindings per molti linguaggi
                             <ul>
-                                <li class="fragment roll-in">php</li>
-                                <li class="fragment roll-in">ruby</li>
-                                <li class="fragment roll-in">C#</li>
-                                <li class="fragment roll-in">java</li>
-                                <li class="fragment roll-in">perl</li>
-                                <li class="fragment roll-in">erlang</li>
-                                <li class="fragment roll-in">clojure</li>
-                                <li class="fragment roll-in">COBOL!</li>
+                                <li>php</li>
+                                <li>ruby</li>
+                                <li>C#</li>
+                                <li>java</li>
+                                <li>perl</li>
+                                <li>erlang</li>
+                                <li>clojure</li>
+                                <li>COBOL!</li>
                             </ul>
                         </li>
                     </ul>
                 </section>
 
                 <section>
+                    <h4>Perchè Rabbit?</h4>
                     <h2>X &times; 100.000 messaggi al secondo...</h2>
-                    <img src="images/what.gif" />
                 </section>
 
                 <section>
-                    <h2>realtime is the new loud...</h2>
+                    <h4>Perchè Rabbit?</h4>
+                    <h2>realtime is the new loud</h2>
+                </section>
+
+                <section>
+                    <h4>Perchè Rabbit?</h4>
+                    <h2>scalability is the new loud</h2>
+                </section>
+
+                <section>
+                    <h4>Perchè Rabbit?</h4>
+                    <h2>multi-language is the new loud</h2>
                 </section>
 
 
+                <section>
+                    <h1>AMQP</h1>
+                    <h5>Advanced Message Queuing Protocol</h5>
+                </section>
 
+                <section>
+                    <p>Un layer applicativo standard aperto per middleware orientati ai messaggi</p>
+                    <p>creato nel 2004 da John O'Hara (JPMorgan Chase)</p>
+                    <p>in seguito adottatto come standard aperto da cisco, red hat, novell, microsoft, vmware</p>
+                </section>
+
+                <section>
+                    <h2>protocollo programmabile</h2>
+                    <p>la logica sta nell'applicazione, non nel server</p>
+                </section>
+
+                <section>
+                    <p>RabbitMQ implementa il protocollo AMQP nativamente</p>
+                    <p>Altri protocolli come stomp, MQTT e http sono installabili via plugin</p>
+                    <br />
+                    <p>AMQP è la scelta più facile e migliore</p>
+                </section>
+
+                <section>
+                    <h1>Back to the rabbit</h1>
+                    <img src="images/ravingrabbids.jpg" height="400">
+                </section>
+
+                <section>
+                    <pre>
+                        <code data-trim>
+{
+    "require": {
+        "videlalvaro/php-amqplib": "~2.2.6"
+    }
+}
+                        </code>
+                    </pre>
+                </section>
+
+                <section>
+                    <pre>
+                        <code data-trim>
+use PhpAmqpLib\Connection\AMQPConnection;
+use PhpAmqpLib\Message\AMQPMessage;
+
+$connection = new AMQPConnection('localhost', 5672, 'guest', 'guest');
+$channel = $connection->channel();
+
+// il vostro meraviglioso codice
+
+$channel->close();
+$connection->close();
+                        </code>
+                    </pre>
+                </section>
+
+                <section>
+                    <h2>come funzionano i messaggi?</h2>
+                </section>
+
+                <section>
+                    <h2>producer / consumer</h2>
+                </section>
+
+                <section>
+                    <p>a day in the life of a message</p>
+                    <img src="images/message-flow.png" />
+                </section>
+
+                <section>
+                    <h3>Queue</h3>
+                    <br />
+                    <p>coda di messaggi in attesa di essere gestiti da un consumer</p>
+                    <p>in un certo senso una coda <strong>è</strong> un consumer</p>
+                    <p class="fragment roll-in">di default i messaggi in rabbit non sono durevoli (durable) nel tempo</p>
+                    <p class="fragment roll-in">quindi no consumer, no coda, no party...</p>
+                    <p class="fragment roll-in">message black holed...<br /><img src="images/black_hole_image.jpg"></p>
+                </section>
+
+                <section>
+                    <pre>
+                        <code data-trim>
+$channel->queue_declare('hello');
+$msg = new AMQPMessage('Hello World!');
+$channel->basic_publish($msg, '', 'hello');
+                        </code>
+                    </pre>
+                    <pre>
+                        <code data-trim>
+/**
+ * declare queue, create if needed
+ */
+public function  queue_declare($queue="",
+                               $passive=false,
+                               $durable=false,
+                               $exclusive=false,
+                               $auto_delete=true,
+                               $nowait=false,
+                               $arguments=null,
+                               $ticket=null) {}
+/**
+ * publish a message
+ */
+public function basic_publish($msg, $exchange="", $routing_key="",
+                                  $mandatory=false, $immediate=false,
+                                  $ticket=null) {}
+                        </code>
+                    </pre>
+                </section>
+
+                <section>
+                    <h3>Un messaggio non viene MAI messo direttamente in una coda</h3>
+                    <p>questo romperebbe il principio secondo il quale il producer non sa se e quali consumer sono in ascolto</p>
+                </section>
+
+                <section>
+                    <h3>Exchanges</h3>
+                    <p>sono la business logic di rabbit. Decidono in quali code finiscono i messaggi</p>
+                </section>
+
+                <section>
+                    <section>
+                        <h3>cose da fare dopo aver installato rabbit</h3>
+                    </section>
+                    <section>
+                        <h2>abilitare il management plugin</h2>
+                        <pre>
+                            <code data-trim>
+                                rabbitmq-plugins enable rabbitmq_management
+                            </code>
+                        </pre>
+                        <h4>http://localhost:15672/</h4>
+                        <img class="fragment roll-in" src="images/rabbit-management.png" />
+                    </section>
+                    <section>
+                        <h3>logs</h3>
+                        <h4>su ubuntu server sono in /var/log/rabbitmq</h4>
+                    </section>
+                </section>
+
+                <section>
+                    <section>
+                        <h2>Cose che avrei voluto sapere prima di cominciare ad usare rabbit</h2>
+                    </section>
+
+                    <section>
+                        <h3>non effettuare mai il routing nei consumer</h3>
+                        <div class="fragment roll-in">
+                            <h2>You are doing it wrong!</h2>
+                            <img src="images/doing_it_wrong.jpg" />
+                        </div>
+                    </section>
+
+                    <section>
+                        <h3>fair dispatch</h3>
+                        <p>i messaggi vengono assegnati immediatamente...appena arrivano</p>
+                        <p>Non rimangono in attesa nell'exchanger</p>
+                        <pre>
+                            <code data-trim>
+/**
+ * specify quality of service
+ */
+public function basic_qos($prefetch_size, $prefetch_count, $a_global)
+                            </code>
+                        </pre>
+                    </section>
+
+                    <section>
+                        <h3>fair dispatch</h3>
+                        <p>i messaggi vengono assegnati immediatamente...appena arrivano</p>
+                        <p>Non rimangono in attesa nell'exchanger</p>
+                    </section>
+                </section>
 
                 <section>
                     <h1>grazie!</h1>
-                    <img src="images/thank-you.gif" width="300" />
                 </section>
 			</div>
 
@@ -163,7 +346,7 @@ function linkify( selector ) {
 				center: true,
 
 				theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
-				transition: Reveal.getQueryHash().transition || 'linear', // default/cube/page/concave/zoom/linear/fade/none
+				transition: Reveal.getQueryHash().transition || 'none', // default/cube/page/concave/zoom/linear/fade/none
 
 				// Parallax scrolling
 				// parallaxBackgroundImage: 'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg',
