@@ -162,11 +162,6 @@ function linkify( selector ) {
                 </section>
 
                 <section>
-                    <h2>protocollo programmabile</h2>
-                    <p>la logica sta nell'applicazione, non nel server</p>
-                </section>
-
-                <section>
                     <p>RabbitMQ implementa il protocollo AMQP nativamente</p>
                     <p>Altri protocolli come stomp, MQTT e http sono installabili via plugin</p>
                     <br />
@@ -179,6 +174,58 @@ function linkify( selector ) {
                 </section>
 
                 <section>
+                    <h2>come funzionano i messaggi?</h2>
+                </section>
+
+                <section>
+                    <p>a day in the life of a message</p>
+                    <img src="images/message-flow.png" />
+                </section>
+
+                <section>
+                    <img src="images/hello-world-example-routing.png" />
+                </section>
+
+                <section>
+                    <h1>rabbit è:</h1>
+                </section>
+
+                <section>
+                    <h3>Messaggi</h3>
+                    <p>Un messaggio non è altro che IL dato</p>
+                    <p>è composto da un body e da un payload</p>
+                </section>
+
+                <section>
+                    <h3>producer</h3>
+                    <p>produce messaggi</p>
+                    <h3>consumer</h3>
+                    <p>consuma messaggi</p>
+                </section>
+
+                <section>
+                    <h3>Exchange</h3>
+                    <p>Business logic dell'applicazione</p>
+                    <p>Riceve i messaggi e li smista</p>
+                </section>
+
+                <section>
+                    <h3>Queue</h3>
+                    <br />
+                    <p>coda di messaggi in attesa di essere gestiti da un consumer</p>
+                    <p>in un certo senso un consumer <strong>è</strong> una coda</p>
+                    <p class="fragment roll-in">di default i messaggi in rabbit non sono durevoli (durable) nel tempo</p>
+                    <p class="fragment roll-in">quindi no consumer, no coda, no party...</p>
+                    <p class="fragment roll-in">message black holed...<br /><img src="images/black_hole_image.jpg"></p>
+                </section>
+
+                <section>
+                    <p>show me the code...</p>
+                    <img src="images/i-have-no-idea-what-im-doing-dog.jpg" />
+                </section>
+
+                <section>
+                    <h2>composer.json</h2>
                     <pre>
                         <code data-trim>
 {
@@ -199,7 +246,7 @@ use PhpAmqpLib\Message\AMQPMessage;
 $connection = new AMQPConnection('localhost', 5672, 'guest', 'guest');
 $channel = $connection->channel();
 
-// il vostro meraviglioso codice
+// codice
 
 $channel->close();
 $connection->close();
@@ -208,33 +255,13 @@ $connection->close();
                 </section>
 
                 <section>
-                    <h2>come funzionano i messaggi?</h2>
-                </section>
-
-                <section>
-                    <h2>producer / consumer</h2>
-                </section>
-
-                <section>
-                    <p>a day in the life of a message</p>
-                    <img src="images/message-flow.png" />
-                </section>
-
-                <section>
-                    <h3>Queue</h3>
-                    <br />
-                    <p>coda di messaggi in attesa di essere gestiti da un consumer</p>
-                    <p>in un certo senso una coda <strong>è</strong> un consumer</p>
-                    <p class="fragment roll-in">di default i messaggi in rabbit non sono durevoli (durable) nel tempo</p>
-                    <p class="fragment roll-in">quindi no consumer, no coda, no party...</p>
-                    <p class="fragment roll-in">message black holed...<br /><img src="images/black_hole_image.jpg"></p>
-                </section>
-
-                <section>
                     <pre>
                         <code data-trim>
+// dichiaro una coda
 $channel->queue_declare('hello');
+// creo un messaggio
 $msg = new AMQPMessage('Hello World!');
+// pubblico
 $channel->basic_publish($msg, '', 'hello');
                         </code>
                     </pre>
@@ -243,14 +270,9 @@ $channel->basic_publish($msg, '', 'hello');
 /**
  * declare queue, create if needed
  */
-public function  queue_declare($queue="",
-                               $passive=false,
-                               $durable=false,
-                               $exclusive=false,
-                               $auto_delete=true,
-                               $nowait=false,
-                               $arguments=null,
-                               $ticket=null) {}
+public function  queue_declare($queue="", $passive=false, $durable=false,
+                               $exclusive=false, $auto_delete=true,
+                               $nowait=false, $arguments=null, $ticket=null) {}
 /**
  * publish a message
  */
@@ -259,6 +281,60 @@ public function basic_publish($msg, $exchange="", $routing_key="",
                                   $ticket=null) {}
                         </code>
                     </pre>
+                </section>
+
+                <section>
+                    <h2>3 modelli principali di routing</h2>
+                </section>
+
+                <section>
+                    <h2>direct exchange</h2>
+                    <img src="images/direct.png" height="100" />
+                    <p>utile per situazioni non durevoli, websockets etc.</p>
+                    <p>il producer "decide" in quale coda finire</p>
+                </section>
+
+                <section>
+                    <pre>
+                        <code data-trim>
+// dichiaro una coda
+$channel->queue_declare('hello');
+// creo un messaggio
+$msg = new AMQPMessage('Hello World!');
+// pubblico
+$channel->basic_publish($msg, '', 'hello');
+                        </code>
+                    </pre>
+                    <pre>
+                        <code data-trim>
+/**
+ * declare queue, create if needed
+ */
+public function  queue_declare($queue="", $passive=false, $durable=false,
+                               $exclusive=false, $auto_delete=true,
+                               $nowait=false, $arguments=null, $ticket=null) {}
+/**
+ * publish a message
+ */
+public function basic_publish($msg, $exchange="", $routing_key="",
+                                  $mandatory=false, $immediate=false,
+                                  $ticket=null) {}
+                        </code>
+                    </pre>
+                </section>
+
+                <section>
+                    <h2>fanout (publish/subscribe)</h2>
+                    <img src="images/fanout.png" height="100" />
+                    <p>implementa il pattern publish/subscribe</p>
+                    <p>il producer pubblica un messaggio, se ci sono consumer in ascolto lo ricevono</p>
+                </section>
+
+                <section>
+                    <h2>topic</h2>
+                    <img src="images/topic.png" height="250">
+                    <p>uno dei modelli più complessi</p>
+                    <p>molto diffuso in sistemi che fanno largo uso di code</p>
                 </section>
 
                 <section>
@@ -297,6 +373,11 @@ public function basic_publish($msg, $exchange="", $routing_key="",
                     </section>
 
                     <section>
+                        <h2>AMQP è un protocollo programmabile</h2>
+                        <p>la logica sta nell'applicazione, non nel server</p>
+                    </section>
+
+                    <section>
                         <h3>non effettuare mai il routing nei consumer</h3>
                         <div class="fragment roll-in">
                             <h2>You are doing it wrong!</h2>
@@ -308,21 +389,12 @@ public function basic_publish($msg, $exchange="", $routing_key="",
                         <h3>fair dispatch</h3>
                         <p>i messaggi vengono assegnati immediatamente...appena arrivano</p>
                         <p>Non rimangono in attesa nell'exchanger</p>
-                        <pre>
-                            <code data-trim>
-/**
- * specify quality of service
- */
-public function basic_qos($prefetch_size, $prefetch_count, $a_global)
-                            </code>
-                        </pre>
                     </section>
+                </section>
 
-                    <section>
-                        <h3>fair dispatch</h3>
-                        <p>i messaggi vengono assegnati immediatamente...appena arrivano</p>
-                        <p>Non rimangono in attesa nell'exchanger</p>
-                    </section>
+                <section>
+                    <h2>Symfony</h2>
+                    <h4 class="fragment roll-in">videlalvaro / RabbitMqBundle</h4>
                 </section>
 
                 <section>
@@ -360,7 +432,7 @@ public function basic_qos($prefetch_size, $prefetch_count, $a_global)
 					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
 					{ src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
 					{ src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } },
-					{ src: 'plugin/remotes/remotes.js', async: true, condition: function() { return !!document.body.classList; } }
+					//{ src: 'plugin/remotes/remotes.js', async: true, condition: function() { return !!document.body.classList; } }
 				]
 			});
 
