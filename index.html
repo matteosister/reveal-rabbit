@@ -48,26 +48,6 @@
                     <img src="images/RabbitMQ.png" width="300" />
                 </section>
 
-				<section>
-					<h2>Pretty Code</h2>
-					<pre><code data-trim contenteditable>
-function linkify( selector ) {
-  if( supports3DTransforms ) {
-
-    var nodes = document.querySelectorAll( selector );
-
-    for( var i = 0, len = nodes.length; i &lt; len; i++ ) {
-      var node = nodes[i];
-
-      if( !node.className ) {
-        node.className += ' roll';
-      }
-    }
-  }
-}
-					</code></pre>
-				</section>
-
                 <section>
                     <h2>Un broker di messaggistica</h2>
                 </section>
@@ -131,22 +111,28 @@ function linkify( selector ) {
 
                 <section>
                     <h4>Perchè Rabbit?</h4>
-                    <h2>X &times; 100.000 messaggi al secondo...</h2>
+                    <h2>performance</h2>
+
+                    <p>Nokia Real Time Traffic Maps</p>
+                    <p>800.000 messaggi / minuto</p>
                 </section>
 
                 <section>
                     <h4>Perchè Rabbit?</h4>
                     <h2>realtime is the new loud</h2>
+                    <p>api di instagram</p>
                 </section>
 
                 <section>
                     <h4>Perchè Rabbit?</h4>
                     <h2>scalability is the new loud</h2>
+                    <p>aws</p>
                 </section>
 
                 <section>
                     <h4>Perchè Rabbit?</h4>
                     <h2>multi-language is the new loud</h2>
+                    <p>php, python, ruby, node anyone?</p>
                 </section>
 
 
@@ -291,31 +277,28 @@ public function basic_publish($msg, $exchange="", $routing_key="",
                     <h2>direct exchange</h2>
                     <img src="images/direct.png" height="100" />
                     <p>utile per situazioni non durevoli, websockets etc.</p>
-                    <p>il producer "decide" in quale coda finire</p>
+                    <p>il producer "decide" in quale coda va a finire il messaggio</p>
                 </section>
 
                 <section>
+                    <h2>producer</h2>
                     <pre>
                         <code data-trim>
 // dichiaro una coda
-$channel->queue_declare('hello');
+$channel->queue_declare('hello', false, false, false, false);
+
 // creo un messaggio
 $msg = new AMQPMessage('Hello World!');
+
 // pubblico
 $channel->basic_publish($msg, '', 'hello');
-                        </code>
-                    </pre>
-                    <pre>
-                        <code data-trim>
-/**
- * declare queue, create if needed
- */
+
+/** API REFERENCE **/
+// declare queue, create if needed
 public function  queue_declare($queue="", $passive=false, $durable=false,
                                $exclusive=false, $auto_delete=true,
                                $nowait=false, $arguments=null, $ticket=null) {}
-/**
- * publish a message
- */
+// publish a message
 public function basic_publish($msg, $exchange="", $routing_key="",
                                   $mandatory=false, $immediate=false,
                                   $ticket=null) {}
@@ -324,10 +307,108 @@ public function basic_publish($msg, $exchange="", $routing_key="",
                 </section>
 
                 <section>
+                    <h2>consumer</h2>
+                    <pre>
+                        <code data-trim>
+// dichiaro una coda identica a quella di prima
+$channel->queue_declare('hello', false, false, false, false);
+
+$callback = function($msg) {
+  echo " [x] Received ", $msg->body, "\n";
+};
+
+$channel->basic_consume('hello', '', false, true, false, false, $callback);
+
+while(count($channel->callbacks)) {
+    $channel->wait();
+}
+
+/** API REFERENCE **/
+// start a queue consumer
+public function basic_consume($queue="", $consumer_tag="", $no_local=false,
+                              $no_ack=false, $exclusive=false, $nowait=false,
+                              $callback=null, ...)
+                        </code>
+                    </pre>
+                </section>
+
+                <section>
                     <h2>fanout (publish/subscribe)</h2>
-                    <img src="images/fanout.png" height="100" />
-                    <p>implementa il pattern publish/subscribe</p>
-                    <p>il producer pubblica un messaggio, se ci sono consumer in ascolto lo ricevono</p>
+                    <img src="images/fanout.png" height="250" />
+                </section>
+
+                <section>
+                    <h2>use cases</h2>
+                    <br />
+                    <h3 class="fragment roll-in">visualizzatore di logs</h3>
+                    <h3 class="fragment roll-in">websockets</h3>
+                </section>
+
+                <section>
+                    <h2>fanout setup</h2>
+                    <pre>
+                        <code data-trim>
+// prima avevamo un exchange senza nome e una routing key
+$channel->basic_publish($msg, '', 'hello');
+
+// creo un exchange
+$channel->exchange_declare('logs', 'fanout', false, false, false);
+
+// publico
+$channel->basic_publish($msg, 'logs');
+
+/** API REFERENCE **/
+// declare exchange, create if needed
+public function exchange_declare($exchange, $type, $passive=false,
+                            $durable=false, $auto_delete=true, ...)
+                        </code>
+                    </pre>
+                </section>
+
+                <section>
+                    <h2>Code temporanee</h2>
+                    <p>il nome della coda è importante quando vuoi condividere l'informazione tra producer e consumer</p>
+                    <p>questo non è il caso</p>
+                    <pre>
+                        <code data-trim>
+list($queue_name, ,) = $channel->queue_declare("");
+                        </code>
+                    </pre>
+                </section>
+
+                <section>
+                    <h2>bindings</h2>
+                    <img src="images/bindings.png" height="150" />
+                    <pre>
+                        <code data-trim>
+$channel->queue_bind($queue_name, 'logs');
+                        </code>
+                    </pre>
+                </section>
+
+                <section>
+                    <h2>log_receiver.php</h2>
+                    <pre>
+                        <code data-trim>
+$channel->exchange_declare('logs', 'fanout', false, false, false);
+
+list($queue_name, ,) = $channel->queue_declare("", false, false, true, false);
+
+$channel->queue_bind($queue_name, 'logs');
+
+echo ' [*] Waiting for logs. To exit press CTRL+C', "\n";
+
+$callback = function($msg){
+  echo ' [x] ', $msg->body, "\n";
+};
+
+$channel->basic_consume($queue_name, '', false, true, false, false, $callback);
+
+while(count($channel->callbacks)) {
+    $channel->wait();
+}
+                        </code>
+                    </pre>
                 </section>
 
                 <section>
@@ -338,63 +419,130 @@ public function basic_publish($msg, $exchange="", $routing_key="",
                 </section>
 
                 <section>
+                    <h2>topic producer</h2>
+                    <pre>
+                        <code data-trim>
+// creo un exchange
+$channel->exchange_declare('topic_logs', 'topic', false, false, false);
+
+// publico
+$msg = new AMQPMessage('test');
+$channel->basic_publish($msg, 'topic_logs', 'server1.alert');
+$channel->basic_publish($msg, 'topic_logs', 'server1.debug');
+$channel->basic_publish($msg, 'topic_logs', 'server2.alert');
+                        </code>
+                    </pre>
+                    <h2>topic consumer</h2>
+                    <pre>
+                        <code data-trim>
+// creo un exchange uguale al precedente
+$channel->exchange_declare("topic_logs", "topic", false, false, false);
+
+list($server1Queue, ,) = $channel->queue_declare("", false, false, true, false);
+$channel->queue_bind($server1Queue, 'topic_logs', 'server1.#');
+
+list($alertQueue, ,) = $channel->queue_declare("", false, false, true, false);
+$channel->queue_bind($alertQueue, 'topic_logs', '#.alert');
+                        </code>
+                    </pre>
+                </section>
+
+                <section>
+                    <h3>cose da fare dopo aver installato rabbit</h3>
+                </section>
+                <section>
+                    <h2>abilitare il management plugin</h2>
+                    <pre>
+                        <code data-trim>
+                            rabbitmq-plugins enable rabbitmq_management
+                        </code>
+                    </pre>
+                    <h4>http://localhost:15672/</h4>
+                    <img class="fragment roll-in" src="images/rabbit-management.png" />
+                </section>
+                <section>
+                    <h3>logs</h3>
+                    <h4>su ubuntu server sono in /var/log/rabbitmq</h4>
+                </section>
+
+                <section>
+                    <h2>Cose che avrei voluto sapere prima di cominciare ad usare rabbit</h2>
+                    <h3>aka wtf moment</h3>
+                </section>
+
+                <section>
                     <h3>Un messaggio non viene MAI messo direttamente in una coda</h3>
                     <p>questo romperebbe il principio secondo il quale il producer non sa se e quali consumer sono in ascolto</p>
                 </section>
 
                 <section>
-                    <h3>Exchanges</h3>
-                    <p>sono la business logic di rabbit. Decidono in quali code finiscono i messaggi</p>
+                    <h2>AMQP è un protocollo programmabile</h2>
+                    <p>la logica sta nell'applicazione, non nel server</p>
                 </section>
 
                 <section>
-                    <section>
-                        <h3>cose da fare dopo aver installato rabbit</h3>
-                    </section>
-                    <section>
-                        <h2>abilitare il management plugin</h2>
-                        <pre>
-                            <code data-trim>
-                                rabbitmq-plugins enable rabbitmq_management
-                            </code>
-                        </pre>
-                        <h4>http://localhost:15672/</h4>
-                        <img class="fragment roll-in" src="images/rabbit-management.png" />
-                    </section>
-                    <section>
-                        <h3>logs</h3>
-                        <h4>su ubuntu server sono in /var/log/rabbitmq</h4>
-                    </section>
+                    <h2>non effettuare MAI il routing nei consumer</h2>
                 </section>
 
                 <section>
-                    <section>
-                        <h2>Cose che avrei voluto sapere prima di cominciare ad usare rabbit</h2>
-                    </section>
-
-                    <section>
-                        <h2>AMQP è un protocollo programmabile</h2>
-                        <p>la logica sta nell'applicazione, non nel server</p>
-                    </section>
-
-                    <section>
-                        <h3>non effettuare mai il routing nei consumer</h3>
-                        <div class="fragment roll-in">
-                            <h2>You are doing it wrong!</h2>
-                            <img src="images/doing_it_wrong.jpg" />
-                        </div>
-                    </section>
-
-                    <section>
-                        <h3>fair dispatch</h3>
-                        <p>i messaggi vengono assegnati immediatamente...appena arrivano</p>
-                        <p>Non rimangono in attesa nell'exchanger</p>
-                    </section>
+                    <h2>fair dispatch</h2>
+                    <p>i messaggi vengono assegnati immediatamente...appena arrivano</p>
+                    <p>Non rimangono in attesa nell'exchanger</p>
                 </section>
 
                 <section>
                     <h2>Symfony</h2>
                     <h4 class="fragment roll-in">videlalvaro / RabbitMqBundle</h4>
+                </section>
+
+                <section>
+                    <pre>
+                        <code data-trim>
+old_sound_rabbit_mq:
+    connections:
+        default:
+            host:     %rabbit_host%
+            lazy:     true
+            port:     5672
+            user:     %rabbit_user%
+            password: %rabbit_password%
+            vhost:    %rabbit_vhost%
+                        </code>
+                    </pre>
+                </section>
+                <section>
+                    <pre><code>    producers:
+        entity:
+            connection: default
+            exchange_options:
+                name: entity
+                type: topic</code></pre>
+                    <pre>
+                        <code>    consumers:
+        pdf_splitter:
+            connection: default
+            exchange_options: { name: entity, type: topic }
+            queue_options:
+                name: pdf_split
+                routing_keys:
+                    - document_upload.created
+            qos_options: { prefetch_size: 0, prefetch_count: 1, global: false }
+            callback: vendor.rabbitmq.consumer.document.pdf_splitter
+
+        page_previewer:
+            connection: default
+            exchange_options: { name: entity, type: topic }
+            queue_options:
+                name: page_preview
+                routing_keys:
+                    - document_page.created
+            qos_options: { prefetch_size: 0, prefetch_count: 1, global: false }
+            callback: vendor.rabbitmq.consumer.document.page_previewer</code>
+                    </pre>
+                </section>
+
+                <section>
+                    codice php con servizi symfony
                 </section>
 
                 <section>
@@ -432,7 +580,7 @@ public function basic_publish($msg, $exchange="", $routing_key="",
 					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
 					{ src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
 					{ src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } },
-					//{ src: 'plugin/remotes/remotes.js', async: true, condition: function() { return !!document.body.classList; } }
+					{ src: 'plugin/remotes/remotes.js', async: true, condition: function() { return !!document.body.classList; } }
 				]
 			});
 
