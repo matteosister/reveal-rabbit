@@ -100,14 +100,17 @@
                     <h6 class="fragment roll-in">è scalabile</h6>
                     <div class="fragment roll-in">
                         <h6>bindings per molti linguaggi</h6>
-                        <h6>php</h6>
-                        <h6>ruby</h6>
-                        <h6>C#</h6>
-                        <h6>java</h6>
-                        <h6>perl</h6>
-                        <h6>erlang</h6>
-                        <h6>clojure</h6>
-                        <h6>COBOL!</h6>
+                        <br />
+                        <div class="fragment roll-in">
+                            <h6>php (amqplib-php)</h6>
+                            <h6>ruby (bunny)</h6>
+                            <h6>java (rabbitmq-java-client)</h6>
+                            <h6>C#</h6>
+                            <h6>perl</h6>
+                            <h6>erlang</h6>
+                            <h6>clojure</h6>
+                            <h6 class="fragment roll-in">COBOL!</h6>
+                        </div>
                     </div>
                 </section>
 
@@ -182,6 +185,18 @@
                     <h3>Messaggi</h3>
                     <p>Un messaggio non è altro che IL dato</p>
                     <p>è composto da un body e da un payload</p>
+                    <br />
+                    <p>alcuni headers utilizzati per convenzione</p>
+                    <ul class="fragment">
+                        <li>Content type</li>
+                        <li>Content encoding</li>
+                        <li>Routing key</li>
+                        <li>Delivery mode (persistent or not)</li>
+                        <li>Message priority</li>
+                        <li>Message publishing timestamp</li>
+                        <li>Expiration period</li>
+                        <li>Publisher application id</li>
+                    </ul>
                 </section>
 
                 <section>
@@ -210,6 +225,8 @@
                 <section>
                     <h3>Virtual Host</h3>
                     <p>1 rabbit = tanti rabbit</p>
+                    <p>ambiente completamente isolato dove vivono le entità AMQP</p>
+                    <p>non è programmabile</p>
                 </section>
 
                 <section>
@@ -293,7 +310,7 @@ public function basic_publish($msg, $exchange="", $routing_key="",
                     <h2>use cases</h2>
                     <br />
                     <h3 class="fragment roll-in">test</h3>
-                    <h3 class="fragment roll-in">piccoli setup</h3>
+                    <h3 class="fragment roll-in">piccoli setup (request offload)</h3>
                 </section>
 
                 <section>
@@ -481,6 +498,11 @@ $channel->queue_bind($alertQueue, 'topic_logs', '#.alert');
                 </section>
 
                 <section>
+                    <h2>Message Acknowledgements (acks)</h2>
+                    <p>riduce le performance, ma è fondamentale per i messaggi importanti</p>
+                </section>
+
+                <section>
                     <h3>cose da fare dopo aver installato rabbit</h3>
                 </section>
                 <section>
@@ -494,8 +516,8 @@ $channel->queue_bind($alertQueue, 'topic_logs', '#.alert');
                     <img class="fragment roll-in" src="images/rabbit-management.png" />
                 </section>
                 <section>
-                    <h3>logs</h3>
-                    <h4>su ubuntu server sono in /var/log/rabbitmq</h4>
+                    <h3>RabbitMQSimulator</h3>
+                    <h4>RabbitMQSimulator / RabbitMQSimulator</h4>
                 </section>
 
                 <section>

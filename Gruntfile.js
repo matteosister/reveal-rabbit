@@ -120,6 +120,13 @@ module.exports = function(grunt) {
                     trace: true
                 }
             }
+        },
+
+        open: {
+            dev: {
+                path: 'http://127.0.0.1:8000/',
+                app: 'google-chrome'
+            }
         }
 	});
 
@@ -132,6 +139,7 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks( 'grunt-contrib-sass' );
 	grunt.loadNpmTasks( 'grunt-contrib-connect' );
     grunt.loadNpmTasks( 'grunt-contrib-compass' );
+    grunt.loadNpmTasks( 'grunt-open' );
 	grunt.loadNpmTasks( 'grunt-zip' );
 
 	// Default task
@@ -144,7 +152,7 @@ module.exports = function(grunt) {
 	grunt.registerTask( 'package', [ 'default', 'zip' ] );
 
 	// Serve presentation locally
-	grunt.registerTask( 'serve', [ 'connect', 'watch' ] );
+	grunt.registerTask( 'serve', [ 'connect', 'open', 'watch' ] );
 
 	// Run tests
 	grunt.registerTask( 'test', [ 'jshint', 'qunit' ] );
