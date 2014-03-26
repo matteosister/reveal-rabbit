@@ -84,7 +84,10 @@
                     <div class="fragment"><h3>linux / debian</h3>apt-get install rabbitmq-server</div>
                     <br />
                     <div class="fragment"><h3>osx</h3>brew install rabbitmq</div>
-                    <div class="fragment"><img src="images/too-easy.jpg" /></div>
+                </section>
+
+                <section>
+                    <img src="images/too-easy.jpg" />
                 </section>
 
                 <section>
@@ -98,25 +101,26 @@
                     <h6 class="fragment roll-in">è open source (MPL)</h6>
                     <h6 class="fragment roll-in">supporta il protocollo AMQP</h6>
                     <h6 class="fragment roll-in">è scalabile</h6>
+                </section>
+
+                <section>
+                    <h2>bindings per molti linguaggi</h2>
+                    <br />
                     <div class="fragment roll-in">
-                        <h6>bindings per molti linguaggi</h6>
-                        <br />
-                        <div class="fragment roll-in">
-                            <h6>php (amqplib-php)</h6>
-                            <h6>ruby (bunny)</h6>
-                            <h6>java (rabbitmq-java-client)</h6>
-                            <h6>C#</h6>
-                            <h6>perl</h6>
-                            <h6>erlang</h6>
-                            <h6>clojure</h6>
-                            <h6 class="fragment roll-in">COBOL!</h6>
-                        </div>
+                        <h6>php (amqplib-php)</h6>
+                        <h6>ruby (bunny)</h6>
+                        <h6>java (rabbitmq-java-client)</h6>
+                        <h6>C#</h6>
+                        <h6>perl</h6>
+                        <h6>erlang</h6>
+                        <h6>clojure</h6>
+                        <h6 class="fragment roll-in">COBOL!</h6>
                     </div>
                 </section>
 
                 <section>
-                    <h4>Perchè Rabbit?</h4>
-                    <h2>performance</h2>
+                    <h3>Perchè Rabbit?</h3>
+                    <h1>performance</h1>
 
                     <p>Nokia Real Time Traffic Maps</p>
                     <p>800.000 messaggi / minuto</p>
@@ -124,19 +128,19 @@
 
                 <section>
                     <h4>Perchè Rabbit?</h4>
-                    <h2>realtime is the new loud</h2>
+                    <h1>realtime is the new loud</h1>
                     <p>api di instagram</p>
                 </section>
 
                 <section>
                     <h4>Perchè Rabbit?</h4>
-                    <h2>scalability is the new loud</h2>
+                    <h1>scalability is the new loud</h1>
                     <p>aws</p>
                 </section>
 
                 <section>
                     <h4>Perchè Rabbit?</h4>
-                    <h2>multi-language is the new loud</h2>
+                    <h1>multi-language is the new loud</h1>
                     <p>php, python, ruby, node anyone?</p>
                 </section>
 
@@ -182,7 +186,7 @@
                 </section>
 
                 <section>
-                    <h3>Messaggi</h3>
+                    <h1>Messaggi</h1>
                     <p>Un messaggio non è altro che IL dato</p>
                     <p>è composto da un body e da un payload</p>
                     <br />
@@ -200,30 +204,26 @@
                 </section>
 
                 <section>
-                    <h3>producer</h3>
-                    <p>produce messaggi</p>
-                    <h3>consumer</h3>
-                    <p>consuma messaggi</p>
+                    <h1>producer</h1>
+                    <br />
+                    <h1>consumer</h1>
                 </section>
 
                 <section>
-                    <h3>Exchange</h3>
+                    <h1>Exchange</h1>
                     <p>Business logic dell'applicazione</p>
                     <p>Riceve i messaggi e li smista</p>
                 </section>
 
                 <section>
-                    <h3>Queue</h3>
+                    <h1>Queue</h1>
                     <br />
                     <p>coda di messaggi in attesa di essere gestiti da un consumer</p>
                     <p>in un certo senso un consumer <strong>è</strong> una coda</p>
-                    <p class="fragment roll-in">di default i messaggi in rabbit non sono durevoli (durable) nel tempo</p>
-                    <p class="fragment roll-in">quindi no consumer, no coda, no party...</p>
-                    <p class="fragment roll-in">message black holed...<br /><img src="images/black_hole_image.jpg"></p>
                 </section>
 
                 <section>
-                    <h3>Virtual Host</h3>
+                    <h1>Virtual Host</h1>
                     <p>1 rabbit = tanti rabbit</p>
                     <p>ambiente completamente isolato dove vivono le entità AMQP</p>
                     <p>non è programmabile</p>
@@ -443,6 +443,9 @@ $channel->basic_consume($queue_name, '', false, true, false, false, $callback);
 while(count($channel->callbacks)) {
     $channel->wait();
 }
+
+$channel->close();
+$connection->close(); // la coda viene cancellata
                         </code>
                     </pre>
                 </section>
@@ -517,11 +520,19 @@ $channel->queue_bind($alertQueue, 'topic_logs', '#.alert');
 
                 <section>
                     <h2>Cose che avrei voluto sapere prima di cominciare ad usare rabbit</h2>
-                    <h3>aka wtf moment</h3>
                 </section>
 
                 <section>
-                    <h3>Un messaggio non viene MAI messo direttamente in una coda</h3>
+                    <h6>aka</h6>
+                    <br />
+                    <div class="fragment">
+                        <h2>wtf moment</h2>
+                        <img src="images/omg_wtf.gif" height="180" />
+                    </div>
+                </section>
+
+                <section>
+                    <h2>Un messaggio non viene MAI messo direttamente in una coda</h2>
                     <p>questo romperebbe il principio secondo il quale il producer non sa se e quali consumer sono in ascolto</p>
                 </section>
 
@@ -601,6 +612,11 @@ old_sound_rabbit_mq:
 
                 <section>
                     <h1>grazie!</h1>
+                    <br />
+                    <h3><img src="images/github.png" width="50" style="border: none; vertical-align: middle" /> matteosister</h3>
+                    <h3><img src="images/GitElephant-logo.png" width="50" style="border: none; vertical-align: middle" /> GitElephant</h3>
+                    <img src="images/thanks.gif" />
+                    <img src="images/thank-you.gif" />
                 </section>
 			</div>
 
