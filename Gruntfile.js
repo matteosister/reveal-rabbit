@@ -138,8 +138,8 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks( 'grunt-contrib-watch' );
 	grunt.loadNpmTasks( 'grunt-contrib-sass' );
 	grunt.loadNpmTasks( 'grunt-contrib-connect' );
-        grunt.loadNpmTasks( 'grunt-contrib-compass' );
-        grunt.loadNpmTasks( 'grunt-open' );
+    grunt.loadNpmTasks( 'grunt-contrib-compass' );
+    grunt.loadNpmTasks( 'grunt-open' );
 	grunt.loadNpmTasks( 'grunt-zip' );
 
 	// Default task
@@ -152,7 +152,7 @@ module.exports = function(grunt) {
 	grunt.registerTask( 'themes', [ 'sass' ] );
 
 	// Package presentation to archive
-	grunt.registerTask( 'package', [ 'default', 'zip' ] );
+	grunt.registerTask( 'package', [ 'minify', 'zip' ] );
 
 	// Serve presentation locally
 	grunt.registerTask( 'serve', [ 'connect', 'open', 'watch' ] );
