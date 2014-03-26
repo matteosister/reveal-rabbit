@@ -44,331 +44,580 @@
 			<!-- Any section element inside of this container is displayed as a slide -->
 			<div class="slides">
                 <section>
-                    <h1>RabbitMQ @ PUGMI</h1>
+                    <h1>RabbitMQ</h1>
                     <img src="images/RabbitMQ.png" width="300" />
                 </section>
 
                 <section>
-                    <code>
-                        <h1>Reveal.js</h1>
-                        <h3>HTML Presentations Made Easy</h3>
-                        <p>
-                            <small>Created by <a href="http://hakim.se">Hakim El Hattab</a> / <a href="http://twitter.com/hakimel">@hakimel</a></small>
-                        </p>
-                    </code>
+                    <h2>Un broker di messaggistica</h2>
                 </section>
 
-				<section>
-					<h1>Reveal.js</h1>
-					<h3>HTML Presentations Made Easy</h3>
-					<p>
-						<small>Created by <a href="http://hakim.se">Hakim El Hattab</a> / <a href="http://twitter.com/hakimel">@hakimel</a></small>
-					</p>
-				</section>
+                <section>
+                    <img src="images/erlang.png" />
+                    <h2>Scritto in erlang</h2>
+                    <h4 class="fragment roll-in">sistemi real-time high availability</h4>
+                    <h4 class="fragment roll-in">telecoms, banking, e-commerce, computer telephony e instant messaging</h4>
+                    <h4 class="fragment roll-in">supporto nativo per concorrenzialità, distribuzione e fault tolerance</h4>
+                </section>
 
-				<section>
-					<h2>Heads Up</h2>
-					<p>
-						reveal.js is a framework for easily creating beautiful presentations using HTML. You'll need a browser with
-						support for CSS 3D transforms to see it in its full glory.
-					</p>
+                <section>
+                    <img src="images/Pivotal_Logo.png" />
+                    <h2>Mantenuto da pivotal</h2>
+                    <div class="fragment roll-in">
+                        <h4>Redis</h4>
+                        <h4>Spring framework</h4>
+                        <h4>Hadoop</h4>
+                    </div>
+                </section>
 
-					<aside class="notes">
-						Oh hey, these are some notes. They'll be hidden in your presentation, but you can see them if you open the speaker notes window (hit 's' on your keyboard).
-					</aside>
-				</section>
+                <section>
+                    <h2>usato da</h2>
+                        <h5>indeed.com</h5>
+                        <h5>telefonica</h5>
+                        <h5>mozilla</h5>
+                        <h5>instagram</h5>
+                </section>
 
-				<!-- Example of nested vertical slides -->
-				<section>
-					<section>
-						<h2>Vertical Slides</h2>
-						<p>
-							Slides can be nested inside of other slides,
-							try pressing <a href="#" class="navigate-down">down</a>.
-						</p>
-						<a href="#" class="image navigate-down">
-							<img width="178" height="238" src="https://s3.amazonaws.com/hakim-static/reveal-js/arrow.png" alt="Down arrow">
-						</a>
-					</section>
-					<section>
-						<h2>Basement Level 1</h2>
-						<p>Press down or up to navigate.</p>
-					</section>
-					<section>
-						<h2>Basement Level 2</h2>
-						<p>Cornify</p>
-						<a class="test" href="http://cornify.com">
-							<img width="280" height="326" src="https://s3.amazonaws.com/hakim-static/reveal-js/cornify.gif" alt="Unicorn">
-						</a>
-					</section>
-					<section>
-						<h2>Basement Level 3</h2>
-						<p>That's it, time to go back up.</p>
-						<a href="#/2" class="image">
-							<img width="178" height="238" src="https://s3.amazonaws.com/hakim-static/reveal-js/arrow.png" alt="Up arrow" style="-webkit-transform: rotate(180deg);">
-						</a>
-					</section>
-				</section>
+                <section>
+                    <h2>Come installare RabbitMQ?</h2>
+                    <br />
+                    <div class="fragment"><h3>linux / debian</h3>apt-get install rabbitmq-server</div>
+                    <br />
+                    <div class="fragment"><h3>osx</h3>brew install rabbitmq</div>
+                </section>
 
-				<section>
-					<h2>Slides</h2>
-					<p>
-						Not a coder? No problem. There's a fully-featured visual editor for authoring these, try it out at <a href="http://slid.es" target="_blank">http://slid.es</a>.
-					</p>
-				</section>
+                <section>
+                    <img src="images/too-easy.jpg" />
+                </section>
 
-				<section>
-					<h2>Point of View</h2>
-					<p>
-						Press <strong>ESC</strong> to enter the slide overview.
-					</p>
-					<p>
-						Hold down alt and click on any element to zoom in on it using <a href="http://lab.hakim.se/zoom-js">zoom.js</a>. Alt + click anywhere to zoom back out.
-					</p>
-				</section>
+                <section>
+                    <h2>Windows?</h2>
+                    <p class="fragment">there is an exe for that...</p>
+                </section>
 
-				<section>
-					<h2>Works in Mobile Safari</h2>
-					<p>
-						Try it out! You can swipe through the slides and pinch your way to the overview.
-					</p>
-				</section>
+                <section>
+                    <h1>Perchè Rabbit?</h1>
+                    <br />
+                    <h6 class="fragment roll-in">è open source (MPL)</h6>
+                    <h6 class="fragment roll-in">supporta il protocollo AMQP</h6>
+                    <h6 class="fragment roll-in">è scalabile</h6>
+                </section>
 
-				<section>
-					<h2>Marvelous Unordered List</h2>
-					<ul>
-						<li>No order here</li>
-						<li>Or here</li>
-						<li>Or here</li>
-						<li>Or here</li>
-					</ul>
-				</section>
+                <section>
+                    <h2>bindings per molti linguaggi</h2>
+                    <br />
+                    <div class="fragment roll-in">
+                        <h6>php (amqplib-php)</h6>
+                        <h6>ruby (bunny)</h6>
+                        <h6>java (rabbitmq-java-client)</h6>
+                        <h6>C#</h6>
+                        <h6>perl</h6>
+                        <h6>erlang</h6>
+                        <h6>clojure</h6>
+                        <h6 class="fragment roll-in">COBOL!</h6>
+                    </div>
+                </section>
 
-				<section>
-					<h2>Fantastic Ordered List</h2>
-					<ol>
-						<li>One is smaller than...</li>
-						<li>Two is smaller than...</li>
-						<li>Three!</li>
-					</ol>
-				</section>
+                <section>
+                    <h3>Perchè Rabbit?</h3>
+                    <h1>performance</h1>
 
-				<section data-markdown>
-					<script type="text/template">
-						## Markdown support
+                    <p>Nokia Real Time Traffic Maps</p>
+                    <p>800.000 messaggi / minuto</p>
+                </section>
 
-						For those of you who like that sort of thing. Instructions and a bit more info available [here](https://github.com/hakimel/reveal.js#markdown).
+                <section>
+                    <h4>Perchè Rabbit?</h4>
+                    <h1>realtime is the new loud</h1>
+                    <p>api di instagram</p>
+                </section>
 
-						```
-						<section data-markdown>
-						  ## Markdown support
+                <section>
+                    <h4>Perchè Rabbit?</h4>
+                    <h1>scalability is the new loud</h1>
+                    <p>aws</p>
+                </section>
 
-						  For those of you who like that sort of thing.
-						  Instructions and a bit more info available [here](https://github.com/hakimel/reveal.js#markdown).
-						</section>
-						```
-					</script>
-				</section>
+                <section>
+                    <h4>Perchè Rabbit?</h4>
+                    <h1>multi-language is the new loud</h1>
+                    <p>php, python, ruby, node anyone?</p>
+                </section>
 
-				<section id="transitions">
-					<h2>Transition Styles</h2>
-					<p>
-						You can select from different transitions, like: <br>
-						<a href="?transition=cube#/transitions">Cube</a> -
-						<a href="?transition=page#/transitions">Page</a> -
-						<a href="?transition=concave#/transitions">Concave</a> -
-						<a href="?transition=zoom#/transitions">Zoom</a> -
-						<a href="?transition=linear#/transitions">Linear</a> -
-						<a href="?transition=fade#/transitions">Fade</a> -
-						<a href="?transition=none#/transitions">None</a> -
-						<a href="?#/transitions">Default</a>
-					</p>
-				</section>
 
-				<section id="themes">
-					<h2>Themes</h2>
-					<p>
-						Reveal.js comes with a few themes built in: <br>
-						<a href="?#/themes">Default</a> -
-						<a href="?theme=sky#/themes">Sky</a> -
-						<a href="?theme=beige#/themes">Beige</a> -
-						<a href="?theme=simple#/themes">Simple</a> -
-						<a href="?theme=serif#/themes">Serif</a> -
-						<a href="?theme=night#/themes">Night</a> <br>
-						<a href="?theme=moon#/themes">Moon</a> -
-						<a href="?theme=solarized#/themes">Solarized</a>
-					</p>
-					<p>
-						<small>
-							* Theme demos are loaded after the presentation which leads to flicker. In production you should load your theme in the <code>&lt;head&gt;</code> using a <code>&lt;link&gt;</code>.
-						</small>
-					</p>
-				</section>
+                <section>
+                    <h1>AMQP</h1>
+                    <h5>Advanced Message Queuing Protocol</h5>
+                </section>
 
-				<section>
-					<h2>Global State</h2>
-					<p>
-						Set <code>data-state="something"</code> on a slide and <code>"something"</code>
-						will be added as a class to the document element when the slide is open. This lets you
-						apply broader style changes, like switching the background.
-					</p>
-				</section>
+                <section>
+                    <p>Un layer applicativo standard aperto per middleware orientati ai messaggi</p>
+                    <p>creato nel 2004 da John O'Hara (JPMorgan Chase)</p>
+                    <p>in seguito adottatto come standard aperto da cisco, red hat, novell, microsoft, vmware</p>
+                </section>
 
-				<section data-state="customevent">
-					<h2>Custom Events</h2>
-					<p>
-						Additionally custom events can be triggered on a per slide basis by binding to the <code>data-state</code> name.
-					</p>
-					<pre><code data-trim contenteditable style="font-size: 18px; margin-top: 20px;">
-Reveal.addEventListener( 'customevent', function() {
-	console.log( '"customevent" has fired' );
-} );
-					</code></pre>
-				</section>
+                <section>
+                    <p>RabbitMQ implementa il protocollo AMQP nativamente</p>
+                    <p>Altri protocolli come stomp, MQTT e http sono installabili via plugin</p>
+                    <br />
+                    <p>AMQP è la scelta più facile e migliore</p>
+                </section>
 
-				<section>
-					<section data-background="#007777">
-						<h2>Slide Backgrounds</h2>
-						<p>
-							Set <code>data-background="#007777"</code> on a slide to change the full page background to the given color. All CSS color formats are supported.
-						</p>
-						<a href="#" class="image navigate-down">
-							<img width="178" height="238" src="https://s3.amazonaws.com/hakim-static/reveal-js/arrow.png" alt="Down arrow">
-						</a>
-					</section>
-					<section data-background="https://s3.amazonaws.com/hakim-static/reveal-js/arrow.png">
-						<h2>Image Backgrounds</h2>
-						<pre><code>&lt;section data-background="image.png"&gt;</code></pre>
-					</section>
-					<section data-background="https://s3.amazonaws.com/hakim-static/reveal-js/arrow.png" data-background-repeat="repeat" data-background-size="100px">
-						<h2>Repeated Image Backgrounds</h2>
-						<pre><code style="word-wrap: break-word;">&lt;section data-background="image.png" data-background-repeat="repeat" data-background-size="100px"&gt;</code></pre>
-					</section>
-				</section>
+                <section>
+                    <h1>Back to the rabbit</h1>
+                    <img src="images/ravingrabbids.jpg" height="400">
+                </section>
 
-				<section data-transition="linear" data-background="#4d7e65" data-background-transition="slide">
-					<h2>Background Transitions</h2>
-					<p>
-						Pass reveal.js the <code>backgroundTransition: 'slide'</code> config argument to make backgrounds slide rather than fade.
-					</p>
-				</section>
+                <section>
+                    <h2>come funzionano i messaggi?</h2>
+                </section>
 
-				<section data-transition="linear" data-background="#8c4738" data-background-transition="slide">
-					<h2>Background Transition Override</h2>
-					<p>
-						You can override background transitions per slide by using <code>data-background-transition="slide"</code>.
-					</p>
-				</section>
+                <section>
+                    <p>a day in the life of a message</p>
+                    <img src="images/message-flow.png" />
+                </section>
 
-				<section>
-					<h2>Clever Quotes</h2>
-					<p>
-						These guys come in two forms, inline: <q cite="http://searchservervirtualization.techtarget.com/definition/Our-Favorite-Technology-Quotations">
-						&ldquo;The nice thing about standards is that there are so many to choose from&rdquo;</q> and block:
-					</p>
-					<blockquote cite="http://searchservervirtualization.techtarget.com/definition/Our-Favorite-Technology-Quotations">
-						&ldquo;For years there has been a theory that millions of monkeys typing at random on millions of typewriters would
-						reproduce the entire works of Shakespeare. The Internet has proven this theory to be untrue.&rdquo;
-					</blockquote>
-				</section>
+                <section>
+                    <img src="images/hello-world-example-routing.png" />
+                </section>
 
-				<section>
-					<h2>Pretty Code</h2>
-					<pre><code data-trim contenteditable>
-function linkify( selector ) {
-  if( supports3DTransforms ) {
+                <section>
+                    <h1>rabbit (amqp) è:</h1>
+                </section>
 
-    var nodes = document.querySelectorAll( selector );
+                <section>
+                    <h1>Messaggi</h1>
+                    <p>Un messaggio non è altro che IL dato</p>
+                    <p>è composto da un body e da un payload</p>
+                    <br />
+                    <p>alcuni headers utilizzati per convenzione</p>
+                    <ul class="fragment">
+                        <li>Content type</li>
+                        <li>Content encoding</li>
+                        <li>Routing key</li>
+                        <li>Delivery mode (persistent or not)</li>
+                        <li>Message priority</li>
+                        <li>Message publishing timestamp</li>
+                        <li>Expiration period</li>
+                        <li>Publisher application id</li>
+                    </ul>
+                </section>
 
-    for( var i = 0, len = nodes.length; i &lt; len; i++ ) {
-      var node = nodes[i];
+                <section>
+                    <h1>producer</h1>
+                    <br />
+                    <h1>consumer</h1>
+                </section>
 
-      if( !node.className ) {
-        node.className += ' roll';
-      }
+                <section>
+                    <h1>Exchange</h1>
+                    <p>Business logic dell'applicazione</p>
+                    <p>Riceve i messaggi e li smista</p>
+                </section>
+
+                <section>
+                    <h1>Queue</h1>
+                    <br />
+                    <p>coda di messaggi in attesa di essere gestiti da un consumer</p>
+                    <p>in un certo senso un consumer <strong>è</strong> una coda</p>
+                </section>
+
+                <section>
+                    <h1>Virtual Host</h1>
+                    <p>1 rabbit = tanti rabbit</p>
+                    <p>ambiente completamente isolato dove vivono le entità AMQP</p>
+                    <p>non è programmabile</p>
+                </section>
+
+                <section>
+                    <p>show me the code...</p>
+                    <img src="images/i-have-no-idea-what-im-doing-dog.jpg" />
+                </section>
+
+                <section>
+                    <h2>composer.json</h2>
+                    <pre>
+                        <code data-trim>
+{
+    "require": {
+        "videlalvaro/php-amqplib": "~2.2.6"
     }
-  }
 }
-					</code></pre>
-					<p>Courtesy of <a href="http://softwaremaniacs.org/soft/highlight/en/description/">highlight.js</a>.</p>
-				</section>
+                        </code>
+                    </pre>
+                </section>
 
-				<section>
-					<h2>Intergalactic Interconnections</h2>
-					<p>
-						You can link between slides internally,
-						<a href="#/2/3">like this</a>.
-					</p>
-				</section>
+                <section>
+                    <pre>
+                        <code data-trim>
+use PhpAmqpLib\Connection\AMQPConnection;
+use PhpAmqpLib\Message\AMQPMessage;
 
-				<section>
-					<section id="fragments">
-						<h2>Fragmented Views</h2>
-						<p>Hit the next arrow...</p>
-						<p class="fragment">... to step through ...</p>
-						<ol>
-							<li class="fragment"><code>any type</code></li>
-							<li class="fragment"><em>of view</em></li>
-							<li class="fragment"><strong>fragments</strong></li>
-						</ol>
+$connection = new AMQPConnection('localhost', 5672, 'guest', 'guest');
+$channel = $connection->channel();
 
-						<aside class="notes">
-							This slide has fragments which are also stepped through in the notes window.
-						</aside>
-					</section>
-					<section>
-						<h2>Fragment Styles</h2>
-						<p>There's a few styles of fragments, like:</p>
-						<p class="fragment grow">grow</p>
-						<p class="fragment shrink">shrink</p>
-						<p class="fragment roll-in">roll-in</p>
-						<p class="fragment fade-out">fade-out</p>
-						<p class="fragment highlight-red">highlight-red</p>
-						<p class="fragment highlight-green">highlight-green</p>
-						<p class="fragment highlight-blue">highlight-blue</p>
-						<p class="fragment current-visible">current-visible</p>
-						<p class="fragment highlight-current-blue">highlight-current-blue</p>
-					</section>
-				</section>
+// codice
 
-				<section>
-					<h2>Spectacular image!</h2>
-					<a class="image" href="http://lab.hakim.se/meny/" target="_blank">
-						<img width="320" height="299" src="http://s3.amazonaws.com/hakim-static/portfolio/images/meny.png" alt="Meny">
-					</a>
-				</section>
+$channel->close();
+$connection->close();
+                        </code>
+                    </pre>
+                </section>
 
-				<section>
-					<h2>Export to PDF</h2>
-					<p>Presentations can be <a href="https://github.com/hakimel/reveal.js#pdf-export">exported to PDF</a>, below is an example that's been uploaded to SlideShare.</p>
-					<iframe id="slideshare" src="http://www.slideshare.net/slideshow/embed_code/13872948" width="455" height="356" style="margin:0;overflow:hidden;border:1px solid #CCC;border-width:1px 1px 0;margin-bottom:5px" allowfullscreen> </iframe>
-					<script>
-						document.getElementById('slideshare').attributeName = 'allowfullscreen';
-					</script>
-				</section>
+                <section>
+                    <pre>
+                        <code data-trim>
+// dichiaro una coda
+$channel->queue_declare('hello');
+// creo un messaggio
+$msg = new AMQPMessage('Hello World!');
+// pubblico
+$channel->basic_publish($msg, '', 'hello');
+                        </code>
+                    </pre>
+                    <pre>
+                        <code data-trim>
+/**
+ * declare queue, create if needed
+ */
+public function queue_declare($queue="", $passive=false, $durable=false,
+                               $exclusive=false, $auto_delete=true,
+                               $nowait=false, $arguments=null, $ticket=null) {}
+/**
+ * publish a message
+ */
+public function basic_publish($msg, $exchange="", $routing_key="",
+                                  $mandatory=false, $immediate=false,
+                                  $ticket=null) {}
+                        </code>
+                    </pre>
+                </section>
 
-				<section>
-					<h2>Take a Moment</h2>
-					<p>
-						Press b or period on your keyboard to enter the 'paused' mode. This mode is helpful when you want to take distracting slides off the screen
-						during a presentation.
-					</p>
-				</section>
+                <section>
+                    <h2>3 modelli principali di routing</h2>
+                    <br />
+                    <h3 class="fragment roll-in">direct</h3>
+                    <h3 class="fragment roll-in">fanout</h3>
+                    <h3 class="fragment roll-in">topic</h3>
+                </section>
 
-				<section>
-					<h2>Stellar Links</h2>
-					<ul>
-						<li><a href="http://slid.es">Try the online editor</a></li>
-						<li><a href="https://github.com/hakimel/reveal.js">Source code on GitHub</a></li>
-						<li><a href="http://twitter.com/hakimel">Follow me on Twitter</a></li>
-					</ul>
-				</section>
+                <section>
+                    <h2>direct exchange</h2>
+                    <img src="images/direct.png" height="100" />
+                </section>
 
-				<section>
-					<h1>THE END</h1>
-					<h3>BY Hakim El Hattab / hakim.se</h3>
-				</section>
+                <section>
+                    <h2>use cases</h2>
+                    <br />
+                    <h3 class="fragment roll-in">test</h3>
+                    <h3 class="fragment roll-in">piccoli setup (request offload)</h3>
+                </section>
 
+                <section>
+                    <h2>producer</h2>
+                    <pre>
+                        <code data-trim>
+// dichiaro una coda
+$channel->queue_declare('hello', false, false, false, false);
+
+// creo un messaggio
+$msg = new AMQPMessage('Hello World!');
+
+// pubblico
+$channel->basic_publish($msg, '', 'hello');
+
+/** API REFERENCE **/
+// declare queue, create if needed
+public function queue_declare($queue="", $passive=false, $durable=false,
+                               $exclusive=false, $auto_delete=true,
+                               $nowait=false, $arguments=null, $ticket=null) {}
+// publish a message
+public function basic_publish($msg, $exchange="", $routing_key="",
+                                  $mandatory=false, $immediate=false,
+                                  $ticket=null) {}
+                        </code>
+                    </pre>
+                    <!--<h4>nome coda: stringa vuota</h4>
+                    <h4>routing key: nome della coda</h4>-->
+                </section>
+
+                <section>
+                    <h2>consumer</h2>
+                    <pre>
+                        <code data-trim>
+// dichiaro una coda identica a quella di prima
+$channel->queue_declare('hello', false, false, false, false);
+
+$callback = function($msg) {
+  echo " [x] Received ", $msg->body, "\n";
+};
+
+$channel->basic_consume('hello', '', false, true, false, false, $callback);
+
+while(count($channel->callbacks)) {
+    $channel->wait();
+}
+
+/** API REFERENCE **/
+// start a queue consumer
+public function basic_consume($queue="", $consumer_tag="", $no_local=false,
+                              $no_ack=false, $exclusive=false, $nowait=false,
+                              $callback=null, ...)
+                        </code>
+                    </pre>
+                </section>
+
+                <section>
+                    <h2>fanout</h2>
+                    <img src="images/fanout.png" height="250" />
+                </section>
+
+                <section>
+                    <h2>use cases</h2>
+                    <br />
+                    <h3 class="fragment roll-in">logging</h3>
+                    <h3 class="fragment roll-in">dashboards in tempo reale</h3>
+                    <h3 class="fragment roll-in">pub/sub</h3>
+                </section>
+
+                <section>
+                    <h2>fanout setup</h2>
+                    <pre>
+                        <code data-trim>
+// prima avevamo un exchange senza nome e una routing key
+$channel->basic_publish($msg, '', 'hello');
+
+// creo un exchange
+$channel->exchange_declare('logs', 'fanout', false, false, false);
+
+// publico
+$channel->basic_publish($msg, 'logs');
+
+/** API REFERENCE **/
+// declare exchange, create if needed
+public function exchange_declare($exchange, $type, $passive=false,
+                            $durable=false, $auto_delete=true, ...)
+                        </code>
+                    </pre>
+                </section>
+
+                <section>
+                    <h2>Code temporanee</h2>
+                    <p>il nome della coda è importante quando vuoi condividere l'informazione tra producer e consumer</p>
+                    <p>questo non è il caso</p>
+                    <pre>
+                        <code data-trim>
+list($queue_name, ,) = $channel->queue_declare("");
+                        </code>
+                    </pre>
+                </section>
+
+                <section>
+                    <h2>bindings</h2>
+                    <img src="images/bindings.png" height="150" />
+                    <pre>
+                        <code data-trim>
+$channel->queue_bind($queue_name, 'logs');
+                        </code>
+                    </pre>
+                </section>
+
+                <section>
+                    <h2>log_receiver.php</h2>
+                    <pre>
+                        <code data-trim>
+$channel->exchange_declare('logs', 'fanout', false, false, false);
+
+list($queue_name, ,) = $channel->queue_declare("", false, false, true, false);
+
+$channel->queue_bind($queue_name, 'logs');
+
+echo ' [*] Waiting for logs. To exit press CTRL+C', "\n";
+
+$callback = function($msg){
+  echo ' [x] ', $msg->body, "\n";
+};
+
+$channel->basic_consume($queue_name, '', false, true, false, false, $callback);
+
+while(count($channel->callbacks)) {
+    $channel->wait();
+}
+
+$channel->close();
+$connection->close(); // la coda viene cancellata
+                        </code>
+                    </pre>
+                </section>
+
+                <section>
+                    <h2>topic</h2>
+                    <img src="images/topic.png" height="250">
+                    <p>uno dei modelli più complessi</p>
+                    <p>ideale per sistemi che fanno largo uso di messaggi</p>
+                </section>
+
+                <section>
+                    <h2>topic producer</h2>
+                    <pre>
+                        <code data-trim>
+// creo un exchange
+$channel->exchange_declare('topic_logs', 'topic', false, false, false);
+
+// publico
+$msg = new AMQPMessage('test');
+$channel->basic_publish($msg, 'topic_logs', 'server1.alert');
+$channel->basic_publish($msg, 'topic_logs', 'server1.debug');
+$channel->basic_publish($msg, 'topic_logs', 'server2.alert');
+                        </code>
+                    </pre>
+                    <h2>topic consumer</h2>
+                    <pre>
+                        <code data-trim>
+// creo un exchange uguale al precedente
+$channel->exchange_declare("topic_logs", "topic", false, false, false);
+
+list($server1Queue, ,) = $channel->queue_declare("", false, false, true, false);
+$channel->queue_bind($server1Queue, 'topic_logs', 'server1.#');
+
+list($alertQueue, ,) = $channel->queue_declare("", false, false, true, false);
+$channel->queue_bind($alertQueue, 'topic_logs', '#.alert');
+                        </code>
+                    </pre>
+                </section>
+
+                <section>
+                    <h2>routing wildcards</h2>
+                    <br />
+                    <h3>*</h3>
+                    <p>esattamente una parola</p>
+                    <h3>#</h3>
+                    <p>zero o più parole</p>
+                </section>
+
+                <section>
+                    <h2>Message Acknowledgements (acks)</h2>
+                    <p>riduce le performance, ma è fondamentale per i messaggi importanti</p>
+                </section>
+
+                <section>
+                    <h3>cose da fare dopo aver installato rabbit</h3>
+                </section>
+                <section>
+                    <h2>abilitare il management plugin</h2>
+                    <pre>
+                        <code data-trim>
+                            rabbitmq-plugins enable rabbitmq_management
+                        </code>
+                    </pre>
+                    <h4>http://localhost:15672/</h4>
+                    <img class="fragment roll-in" src="images/rabbit-management.png" />
+                </section>
+                <section>
+                    <h3>RabbitMQSimulator</h3>
+                    <h4>RabbitMQSimulator / RabbitMQSimulator</h4>
+                </section>
+
+                <section>
+                    <h2>Cose che avrei voluto sapere prima di cominciare ad usare rabbit</h2>
+                </section>
+
+                <section>
+                    <h6>aka</h6>
+                    <br />
+                    <div class="fragment">
+                        <h2>wtf moment</h2>
+                        <img src="images/omg_wtf.gif" height="180" />
+                    </div>
+                </section>
+
+                <section>
+                    <h2>Un messaggio non viene MAI messo direttamente in una coda</h2>
+                    <p>questo romperebbe il principio secondo il quale il producer non sa se e quali consumer sono in ascolto</p>
+                </section>
+
+                <section>
+                    <h2>AMQP è un protocollo programmabile</h2>
+                    <p>la logica sta nell'applicazione, non nel server</p>
+                </section>
+
+                <section>
+                    <h2>non effettuare MAI il routing nei consumer</h2>
+                </section>
+
+                <section>
+                    <h2>fair dispatch</h2>
+                    <p>i messaggi vengono assegnati immediatamente...appena arrivano</p>
+                    <p>Non rimangono in attesa nell'exchanger</p>
+                </section>
+
+                <section>
+                    <h2>Symfony</h2>
+                    <h4 class="fragment roll-in">videlalvaro / RabbitMqBundle</h4>
+                </section>
+
+                <section>
+                    <pre>
+                        <code data-trim>
+old_sound_rabbit_mq:
+    connections:
+        default:
+            host:     %rabbit_host%
+            lazy:     true
+            port:     5672
+            user:     %rabbit_user%
+            password: %rabbit_password%
+            vhost:    %rabbit_vhost%
+                        </code>
+                    </pre>
+                </section>
+                <section>
+                    <pre><code>    producers:
+        entity:
+            connection: default
+            exchange_options:
+                name: entity
+                type: topic</code></pre>
+                    <pre>
+                        <code>    consumers:
+        pdf_splitter:
+            connection: default
+            exchange_options: { name: entity, type: topic }
+            queue_options:
+                name: pdf_split
+                routing_keys:
+                    - document_upload.created
+            qos_options: { prefetch_size: 0, prefetch_count: 1, global: false }
+            callback: vendor.rabbitmq.consumer.document.pdf_splitter
+
+        page_previewer:
+            connection: default
+            exchange_options: { name: entity, type: topic }
+            queue_options:
+                name: page_preview
+                routing_keys:
+                    - document_page.created
+            qos_options: { prefetch_size: 0, prefetch_count: 1, global: false }
+            callback: vendor.rabbitmq.consumer.document.page_previewer</code>
+                    </pre>
+                </section>
+
+                <section>
+                    <h1>use case</h1>
+                </section>
+
+                <section>
+                    <img src="images/backoffice_documenti.png" />
+                </section>
+
+                <section>
+                    <h1>grazie!</h1>
+                    <br />
+                    <h3><img src="images/github.png" width="50" style="border: none; vertical-align: middle" /> matteosister</h3>
+                    <h3><img src="images/GitElephant-logo.png" width="50" style="border: none; vertical-align: middle" /> GitElephant</h3>
+                    <img src="images/thanks.gif" />
+                    <img src="images/thank-you.gif" />
+                </section>
 			</div>
 
 		</div>
@@ -387,7 +636,7 @@ function linkify( selector ) {
 				center: true,
 
 				theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
-				transition: Reveal.getQueryHash().transition || 'linear', // default/cube/page/concave/zoom/linear/fade/none
+				transition: Reveal.getQueryHash().transition || 'none', // default/cube/page/concave/zoom/linear/fade/none
 
 				// Parallax scrolling
 				// parallaxBackgroundImage: 'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg',
