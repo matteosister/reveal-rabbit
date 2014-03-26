@@ -138,12 +138,15 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks( 'grunt-contrib-watch' );
 	grunt.loadNpmTasks( 'grunt-contrib-sass' );
 	grunt.loadNpmTasks( 'grunt-contrib-connect' );
-    grunt.loadNpmTasks( 'grunt-contrib-compass' );
-    grunt.loadNpmTasks( 'grunt-open' );
+        grunt.loadNpmTasks( 'grunt-contrib-compass' );
+        grunt.loadNpmTasks( 'grunt-open' );
 	grunt.loadNpmTasks( 'grunt-zip' );
 
 	// Default task
-	grunt.registerTask( 'default', [ 'jshint', 'cssmin', 'uglify', 'qunit' ] );
+	grunt.registerTask( 'default', [ 'serve' ] );
+
+	// Minify task
+	grunt.registerTask( 'minify', [ 'jshint', 'cssmin', 'uglify', 'qunit' ] );
 
 	// Theme task
 	grunt.registerTask( 'themes', [ 'sass' ] );
