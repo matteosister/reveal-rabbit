@@ -55,15 +55,15 @@
                 <section>
                     <img src="images/erlang.png" />
                     <h2>Scritto in erlang</h2>
-                    <h4 class="fragment roll-in">sistemi real-time high availability</h4>
-                    <h4 class="fragment roll-in">telecoms, banking, e-commerce, computer telephony e instant messaging</h4>
-                    <h4 class="fragment roll-in">supporto nativo per concorrenzialità, distribuzione e fault tolerance</h4>
+                    <h4 class="fragment ">sistemi real-time high availability</h4>
+                    <h4 class="fragment ">telecoms, banking, e-commerce, computer telephony e instant messaging</h4>
+                    <h4 class="fragment ">supporto nativo per concorrenzialità, distribuzione e fault tolerance</h4>
                 </section>
 
                 <section>
                     <img src="images/Pivotal_Logo.png" />
                     <h2>Mantenuto da pivotal</h2>
-                    <div class="fragment roll-in">
+                    <div class="fragment ">
                         <h4>Redis</h4>
                         <h4>Spring framework</h4>
                         <h4>Hadoop</h4>
@@ -98,15 +98,15 @@
                 <section>
                     <h1>Perchè Rabbit?</h1>
                     <br />
-                    <h6 class="fragment roll-in">è open source (MPL)</h6>
-                    <h6 class="fragment roll-in">supporta il protocollo AMQP</h6>
-                    <h6 class="fragment roll-in">è scalabile</h6>
+                    <h6 class="fragment ">è open source (MPL)</h6>
+                    <h6 class="fragment ">supporta il protocollo AMQP</h6>
+                    <h6 class="fragment ">è scalabile</h6>
                 </section>
 
                 <section>
                     <h2>bindings per molti linguaggi</h2>
                     <br />
-                    <div class="fragment roll-in">
+                    <div class="fragment ">
                         <h6>php (amqplib-php)</h6>
                         <h6>ruby (bunny)</h6>
                         <h6>java (rabbitmq-java-client)</h6>
@@ -114,7 +114,7 @@
                         <h6>perl</h6>
                         <h6>erlang</h6>
                         <h6>clojure</h6>
-                        <h6 class="fragment roll-in">COBOL!</h6>
+                        <h6 class="fragment ">COBOL!</h6>
                     </div>
                 </section>
 
@@ -124,18 +124,23 @@
 
                     <p>Nokia Real Time Traffic Maps</p>
                     <p>800.000 messaggi / minuto</p>
+                    <p><a href="https://blogs.vmware.com/vfabric/2013/04/how-fast-is-a-rabbit-basic-rabbitmq-performance-benchmarks.html">pivotal blog</a></p>
+                    <p><a href="http://www.rabbitmq.com/blog/2011/10/27/performance-of-queues-when-less-is-more/">sito ufficiale rabbitmq</a></p>
+                    <p><a href="http://blog.gopivotal.com/pivotal/case-studies-2/800000-messagesminute-how-nokias-here-uses-rabbitmq-to-make-real-time-traffic-maps">nokia real-time traffic maps</a></p>
                 </section>
 
                 <section>
                     <h4>Perchè Rabbit?</h4>
                     <h1>realtime is the new loud</h1>
-                    <p>api di instagram</p>
+                    <p><a href="http://instagram.com/developer/realtime/">api di instagram</a></p>
                 </section>
 
                 <section>
                     <h4>Perchè Rabbit?</h4>
                     <h1>scalability is the new loud</h1>
                     <p>aws</p>
+                    <br />
+                    <a href="https://www.rabbitmq.com/clustering.html">clustering</a>
                 </section>
 
                 <section>
@@ -296,9 +301,9 @@ public function basic_publish($msg, $exchange="", $routing_key="",
                 <section>
                     <h2>3 modelli principali di routing</h2>
                     <br />
-                    <h3 class="fragment roll-in">direct</h3>
-                    <h3 class="fragment roll-in">fanout</h3>
-                    <h3 class="fragment roll-in">topic</h3>
+                    <h3 class="fragment ">direct</h3>
+                    <h3 class="fragment ">fanout</h3>
+                    <h3 class="fragment ">topic</h3>
                 </section>
 
                 <section>
@@ -309,8 +314,8 @@ public function basic_publish($msg, $exchange="", $routing_key="",
                 <section>
                     <h2>use cases</h2>
                     <br />
-                    <h3 class="fragment roll-in">test</h3>
-                    <h3 class="fragment roll-in">piccoli setup (request offload)</h3>
+                    <h3 class="fragment ">test</h3>
+                    <h3 class="fragment ">piccoli setup (request offload)</h3>
                 </section>
 
                 <section>
@@ -375,9 +380,9 @@ public function basic_consume($queue="", $consumer_tag="", $no_local=false,
                 <section>
                     <h2>use cases</h2>
                     <br />
-                    <h3 class="fragment roll-in">logging</h3>
-                    <h3 class="fragment roll-in">dashboards in tempo reale</h3>
-                    <h3 class="fragment roll-in">pub/sub</h3>
+                    <h3 class="fragment ">logging</h3>
+                    <h3 class="fragment ">dashboards in tempo reale</h3>
+                    <h3 class="fragment ">pub/sub</h3>
                 </section>
 
                 <section>
@@ -511,11 +516,11 @@ $channel->queue_bind($alertQueue, 'topic_logs', '#.alert');
                         </code>
                     </pre>
                     <h4>http://localhost:15672/</h4>
-                    <img class="fragment roll-in" src="images/rabbit-management.png" />
+                    <img class="fragment" src="images/rabbit-management.png" />
                 </section>
                 <section>
                     <h3>RabbitMQSimulator</h3>
-                    <h4>RabbitMQSimulator / RabbitMQSimulator</h4>
+                    <h4><a href="https://github.com/RabbitMQSimulator/RabbitMQSimulator">RabbitMQSimulator / RabbitMQSimulator</a></h4>
                 </section>
 
                 <section>
@@ -553,7 +558,7 @@ $channel->queue_bind($alertQueue, 'topic_logs', '#.alert');
 
                 <section>
                     <h2>Symfony</h2>
-                    <h4 class="fragment roll-in">videlalvaro / RabbitMqBundle</h4>
+                    <h4><a href="https://github.com/videlalvaro/RabbitMqBundle">videlalvaro / RabbitMqBundle</a></h4>
                 </section>
 
                 <section>
@@ -613,8 +618,16 @@ old_sound_rabbit_mq:
                 <section>
                     <h1>grazie!</h1>
                     <br />
-                    <h3><img src="images/github.png" width="50" style="border: none; vertical-align: middle" /> matteosister</h3>
-                    <h3><img src="images/GitElephant-logo.png" width="50" style="border: none; vertical-align: middle" /> GitElephant</h3>
+                    <h3>
+                        <a href="https://github.com/matteosister">
+                            <img src="images/github.png" width="50" style="border: none; vertical-align: middle" /> matteosister
+                        </a>
+                    </h3>
+                    <h3>
+                        <a href="https://github.com/matteosister/GitElephant">
+                            <img src="images/GitElephant-logo.png" width="50" style="border: none; vertical-align: middle" /> GitElephant
+                        </a>
+                    </h3>
                     <img src="images/thanks.gif" />
                     <img src="images/thank-you.gif" />
                 </section>
@@ -650,7 +663,7 @@ old_sound_rabbit_mq:
 					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
 					{ src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
 					{ src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } },
-					{ src: 'plugin/remotes/remotes.js', async: true, condition: function() { return !!document.body.classList; } }
+					//{ src: 'plugin/remotes/remotes.js', async: true, condition: function() { return !!document.body.classList; } }
 				]
 			});
 
